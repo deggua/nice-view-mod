@@ -23,8 +23,6 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
 #include "peripheral_status.h"
 
-#include "src/widgets/animimage/lv_animimage.h"
-
 LV_IMG_DECLARE(f0000);
 LV_IMG_DECLARE(f0001);
 LV_IMG_DECLARE(f0002);
@@ -142,8 +140,8 @@ int zmk_widget_status_init(struct zmk_widget_status *widget, lv_obj_t *parent) {
     lv_obj_center(art);
     lv_animimg_set_src(art, (const void**)anim_imgs, 8);
     lv_animimg_set_duration(art, 2400);
-    lv_animimg_set_repeat_count(arg, LV_ANIM_REPEAT_INFINITE);
-    lv_animimg_start(arg);
+    lv_animimg_set_repeat_count(art, LV_ANIM_REPEAT_INFINITE);
+    lv_animimg_start(art);
 
     lv_obj_align(art, LV_ALIGN_TOP_LEFT, 0, 0);
 
