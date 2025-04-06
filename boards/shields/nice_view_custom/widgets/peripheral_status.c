@@ -23,6 +23,8 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
 #include "peripheral_status.h"
 
+#include "src/widgets/animimage/lv_animimage.h"
+
 LV_IMG_DECLARE(f0000);
 LV_IMG_DECLARE(f0001);
 LV_IMG_DECLARE(f0002);
