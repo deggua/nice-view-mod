@@ -32,7 +32,7 @@ LV_IMG_DECLARE(f0005);
 LV_IMG_DECLARE(f0006);
 LV_IMG_DECLARE(f0007);
 
-const lv_img_dsc_t* anim_imgs[] = {
+const lv_image_dsc_t* anim_imgs[] = {
     &f0000,
     &f0001,
     &f0002,

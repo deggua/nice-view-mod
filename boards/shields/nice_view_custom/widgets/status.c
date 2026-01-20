@@ -133,7 +133,7 @@ static void draw_top(lv_obj_t *widget, lv_color_t cbuf[], const struct status_st
         range = 1;
     }
 
-    lv_point_t points[10];
+    lv_point_precise_t points[10];
     for (int i = 0; i < 10; i++) {
         points[i].x = 2 + i * 7;
         points[i].y = 60 - (state->wpm[i] - min) * 36 / range;
