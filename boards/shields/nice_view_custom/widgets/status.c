@@ -94,7 +94,8 @@ static void draw_top(lv_obj_t *widget, lv_color_t cbuf[], const struct status_st
 #if 0
     lv_canvas_draw_text(canvas, 0, 0, CANVAS_SIZE, &label_dsc, output_text);
 #else
-    lv_draw_label(&layer, &label_dsc, &(lv_area_t){0, 0, CANVAS_SIZE - 1, 16 - 1}, output_text, NULL);
+    label_dsc.text = output_text;
+    lv_draw_label(&layer, &label_dsc, &(lv_area_t){0, 0, CANVAS_SIZE - 1, 16 - 1});
 #endif
 
     // Draw WPM
@@ -111,7 +112,8 @@ static void draw_top(lv_obj_t *widget, lv_color_t cbuf[], const struct status_st
 #if 0
     lv_canvas_draw_text(canvas, 42, 52, 24, &label_dsc_wpm, wpm_text);
 #else
-    lv_draw_label(&layer, &label_dsc_wpm, &(lv_area_t){42, 52, 42 + 24 - 1, 52 + 8 - 1}, wpm_text, NULL);
+    label_dsc_wpm.text = wpm_text;
+    lv_draw_label(&layer, &label_dsc_wpm, &(lv_area_t){42, 52, 42 + 24 - 1, 52 + 8 - 1});
 #endif
 
     int max = 0;
@@ -149,7 +151,7 @@ static void draw_top(lv_obj_t *widget, lv_color_t cbuf[], const struct status_st
     }
 #endif
 
-    lv_canvas_finish_layer(&layer);
+    lv_canvas_finish_layer(canvas, &layer);
 
     // Rotate canvas
     rotate_canvas(canvas, cbuf);
@@ -220,26 +222,25 @@ static void draw_middle(lv_obj_t *widget, lv_color_t cbuf[], const struct status
 #endif
         }
 
-        char label[2];
-        snprintf(label, sizeof(label), "%d", i + 1);
+        const char* labels[] = {"1", "2", "3", "4", "5"};
 #if 0
         lv_canvas_draw_text(canvas, circle_offsets[i][0] - 8, circle_offsets[i][1] - 10, 16,
                             (selected ? &label_dsc_black : &label_dsc), label);
 #else
+        lv_draw_label_dsc_t sel_label_dsc = selected ? label_dsc_black : label_dsc;
+        sel_label_dsc.text = labels[i];
         lv_draw_label(&layer,
-                     (selected ? &label_dsc_black : &label_dsc),
+                     sel_label_dsc,
                      &(lv_area_t){
                         circle_offsets[i][0] - 8,
                         circle_offsets[i][1] - 10,
                         circle_offsets[i][0] - 8 + 16,
                         circle_offsets[i][1] - 10 + CANVAS_SIZE - 1
-                     },
-                     label,
-                     NULL);
+                     });
 #endif
     }
 
-    lv_canvas_finish_layer(&layer);
+    lv_canvas_finish_layer(canvas, &layer);
 
     // Rotate canvas
     rotate_canvas(canvas, cbuf);
@@ -272,17 +273,19 @@ static void draw_bottom(lv_obj_t *widget, lv_color_t cbuf[], const struct status
 #if 0
         lv_canvas_draw_text(canvas, 0, 5, 68, &label_dsc, text);
 #else
-        lv_draw_label(&layer, &label_dsc, &(lv_area_t){0, 5, 68 - 1, 5 + 14 - 1}, text, NULL);
+        label_dsc.text = text;
+        lv_draw_label(&layer, &label_dsc, &(lv_area_t){0, 5, 68 - 1, 5 + 14 - 1});
 #endif
     } else {
 #if 0
         lv_canvas_draw_text(canvas, 0, 5, 68, &label_dsc, state->layer_label);
 #else
-        lv_draw_label(&layer, &label_dsc, &(lv_area_t){0, 5, 68 - 1, 5 + 14 - 1}, state->layer_label, NULL);
+        label_dsc.text = state->layer_label;
+        lv_draw_label(&layer, &label_dsc, &(lv_area_t){0, 5, 68 - 1, 5 + 14 - 1});
 #endif
     }
 
-    lv_canvas_finish_layer(&layer);
+    lv_canvas_finish_layer(canvas, &layer);
 
     // Rotate canvas
     rotate_canvas(canvas, cbuf);

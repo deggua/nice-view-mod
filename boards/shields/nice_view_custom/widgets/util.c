@@ -36,7 +36,7 @@ void rotate_canvas(lv_obj_t *canvas, lv_color_t cbuf[]) {
 
     lv_draw_image(&layer, &draw_dsc, &(lv_area_t){0, 0, CANVAS_SIZE - 1, CANVAS_SIZE - 1});
 
-    lv_canvas_finish_layer(&layer);
+    lv_canvas_finish_layer(canvas, &layer);
 #endif
 }
 
@@ -62,7 +62,7 @@ void draw_battery(lv_obj_t *canvas, const struct status_state *state) {
     lv_draw_rect(&layer, &rect_white_dsc, &(lv_area_t){30, 5, 30 + 3 - 1, 5 + 6 - 1});
     lv_draw_rect(&layer, &rect_black_dsc, &(lv_area_t){31, 6, 31 + 1 - 1, 6 + 4 - 1});
 
-    lv_canvas_finish_layer(&layer);
+    lv_canvas_finish_layer(canvas, &layer);
 #endif
 
     if (state->charging) {
