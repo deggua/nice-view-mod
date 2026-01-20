@@ -230,7 +230,7 @@ static void draw_middle(lv_obj_t *widget, lv_color_t cbuf[], const struct status
         lv_draw_label_dsc_t sel_label_dsc = selected ? label_dsc_black : label_dsc;
         sel_label_dsc.text = labels[i];
         lv_draw_label(&layer,
-                     sel_label_dsc,
+                     &sel_label_dsc,
                      &(lv_area_t){
                         circle_offsets[i][0] - 8,
                         circle_offsets[i][1] - 10,
