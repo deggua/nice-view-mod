@@ -15,7 +15,7 @@ void rotate_canvas(lv_obj_t *canvas, lv_color_t cbuf[]) {
     memcpy(cbuf_tmp, cbuf, sizeof(cbuf_tmp));
     lv_img_dsc_t img;
     img.data = (void *)cbuf_tmp;
-    img.header.cf = LV_IMG_CF_TRUE_COLOR;
+    img.header.cf = LV_COLOR_FORMAT_NATIVE;
     img.header.w = CANVAS_SIZE;
     img.header.h = CANVAS_SIZE;
 
@@ -30,11 +30,22 @@ void draw_battery(lv_obj_t *canvas, const struct status_state *state) {
     lv_draw_rect_dsc_t rect_white_dsc;
     init_rect_dsc(&rect_white_dsc, LVGL_FOREGROUND);
 
-    lv_canvas_draw_rect(canvas, 0, 2, 29, 12, &rect_white_dsc);
-    lv_canvas_draw_rect(canvas, 1, 3, 27, 10, &rect_black_dsc);
-    lv_canvas_draw_rect(canvas, 2, 4, (state->battery + 2) / 4, 8, &rect_white_dsc);
+#if 0
+    lv_canvas_draw_rect(canvas,  0, 2, 29, 12, &rect_white_dsc);
+    lv_canvas_draw_rect(canvas,  1, 3, 27, 10, &rect_black_dsc);
+    lv_canvas_draw_rect(canvas,  2, 4, (state->battery + 2) / 4, 8, &rect_white_dsc);
     lv_canvas_draw_rect(canvas, 30, 5, 3, 6, &rect_white_dsc);
     lv_canvas_draw_rect(canvas, 31, 6, 1, 4, &rect_black_dsc);
+#else
+    lv_layer_t layer;
+    lv_canvas_init_layer(canvas, &layer);
+
+    lv_draw_rect(&layer, &rect_white_dsc, &(lv_area_t){ 0, 2, 29 - 1, 12 - 1});
+    lv_draw_rect(&layer, &rect_black_dsc, &(lv_area_t){ 1, 3, 27 - 1, 10 - 1});
+    lv_draw_rect(&layer, &rect_white_dsc, &(lv_area_t){ 2, 4, (state->battery + 2) / 4 - 1, 8 - 1});
+    lv_draw_rect(&layer, &rect_white_dsc, &(lv_area_t){30, 5, 3 - 1, 6 - 1});
+    lv_draw_rect(&layer, &rect_black_dsc, &(lv_area_t){31, 6, 1 - 1, 4 - 1});
+#endif
 
     if (state->charging) {
         lv_draw_img_dsc_t img_dsc;
