@@ -20,8 +20,24 @@ void rotate_canvas(lv_obj_t *canvas, lv_color_t cbuf[]) {
     img.header.h = CANVAS_SIZE;
 
     lv_canvas_fill_bg(canvas, LVGL_BACKGROUND, LV_OPA_COVER);
+#if 0
     lv_canvas_transform(canvas, &img, 900, LV_IMG_ZOOM_NONE, -1, 0, CANVAS_SIZE / 2,
                         CANVAS_SIZE / 2, true);
+#else
+    lv_layer_t layer;
+    lv_canvas_init_layer(canvas, &layer);
+
+    lv_draw_image_dsc_t draw_dsc;
+    lv_draw_image_dsc_init(&draw_dsc);
+    draw_dsc.src = &img;
+    draw_dsc.rotation = 900;
+    draw_dsc.scale_x = LV_SCALE_NONE;
+    draw_dsc.scale_y = LV_SCALE_NONE;
+
+    lv_draw_image(&layer, &draw_dsc, &(lv_area_t){0, 0, CANVAS_SIZE - 1, CANVAS_SIZE - 1});
+
+    lv_canvas_finish_layer(&layer);
+#endif
 }
 
 void draw_battery(lv_obj_t *canvas, const struct status_state *state) {
@@ -40,11 +56,13 @@ void draw_battery(lv_obj_t *canvas, const struct status_state *state) {
     lv_layer_t layer;
     lv_canvas_init_layer(canvas, &layer);
 
-    lv_draw_rect(&layer, &rect_white_dsc, &(lv_area_t){ 0, 2, 29 - 1, 12 - 1});
-    lv_draw_rect(&layer, &rect_black_dsc, &(lv_area_t){ 1, 3, 27 - 1, 10 - 1});
-    lv_draw_rect(&layer, &rect_white_dsc, &(lv_area_t){ 2, 4, (state->battery + 2) / 4 - 1, 8 - 1});
-    lv_draw_rect(&layer, &rect_white_dsc, &(lv_area_t){30, 5, 3 - 1, 6 - 1});
-    lv_draw_rect(&layer, &rect_black_dsc, &(lv_area_t){31, 6, 1 - 1, 4 - 1});
+    lv_draw_rect(&layer, &rect_white_dsc, &(lv_area_t){ 0, 2, 0 + 29 - 1, 2 + 12 - 1});
+    lv_draw_rect(&layer, &rect_black_dsc, &(lv_area_t){ 1, 3, 1 + 27 - 1, 3 + 10 - 1});
+    lv_draw_rect(&layer, &rect_white_dsc, &(lv_area_t){ 2, 4, 2 + (state->battery + 2) / 4 - 1, 4 + 8 - 1});
+    lv_draw_rect(&layer, &rect_white_dsc, &(lv_area_t){30, 5, 30 + 3 - 1, 5 + 6 - 1});
+    lv_draw_rect(&layer, &rect_black_dsc, &(lv_area_t){31, 6, 31 + 1 - 1, 6 + 4 - 1});
+
+    lv_canvas_finish_layer(&layer);
 #endif
 
     if (state->charging) {

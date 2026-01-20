@@ -97,8 +97,6 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_F0000 uin
 
 const lv_img_dsc_t f0000 = {
   .header.cf = LV_COLOR_FORMAT_I1,
-  .header.always_zero = 0,
-  .header.reserved = 0,
   .header.w = 140,
   .header.h = 68,
   .data_size = 1232,
@@ -191,8 +189,6 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_F0001 uin
 
 const lv_img_dsc_t f0001 = {
   .header.cf = LV_COLOR_FORMAT_I1,
-  .header.always_zero = 0,
-  .header.reserved = 0,
   .header.w = 140,
   .header.h = 68,
   .data_size = 1232,
@@ -285,8 +281,6 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_F0002 uin
 
 const lv_img_dsc_t f0002 = {
   .header.cf = LV_COLOR_FORMAT_I1,
-  .header.always_zero = 0,
-  .header.reserved = 0,
   .header.w = 140,
   .header.h = 68,
   .data_size = 1232,
@@ -379,8 +373,6 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_F0003 uin
 
 const lv_img_dsc_t f0003 = {
   .header.cf = LV_COLOR_FORMAT_I1,
-  .header.always_zero = 0,
-  .header.reserved = 0,
   .header.w = 140,
   .header.h = 68,
   .data_size = 1232,
@@ -472,8 +464,6 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_F0004 uin
 
 const lv_img_dsc_t f0004 = {
   .header.cf = LV_COLOR_FORMAT_I1,
-  .header.always_zero = 0,
-  .header.reserved = 0,
   .header.w = 140,
   .header.h = 68,
   .data_size = 1232,
@@ -565,8 +555,6 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_F0005 uin
 
 const lv_img_dsc_t f0005 = {
   .header.cf = LV_COLOR_FORMAT_I1,
-  .header.always_zero = 0,
-  .header.reserved = 0,
   .header.w = 140,
   .header.h = 68,
   .data_size = 1232,
@@ -658,8 +646,6 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_F0006 uin
 
 const lv_img_dsc_t f0006 = {
   .header.cf = LV_COLOR_FORMAT_I1,
-  .header.always_zero = 0,
-  .header.reserved = 0,
   .header.w = 140,
   .header.h = 68,
   .data_size = 1232,
@@ -751,8 +737,6 @@ const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_F0007 uin
 
 const lv_img_dsc_t f0007 = {
   .header.cf = LV_COLOR_FORMAT_I1,
-  .header.always_zero = 0,
-  .header.reserved = 0,
   .header.w = 140,
   .header.h = 68,
   .data_size = 1232,

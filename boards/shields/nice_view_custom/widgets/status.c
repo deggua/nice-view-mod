@@ -91,7 +91,11 @@ static void draw_top(lv_obj_t *widget, lv_color_t cbuf[], const struct status_st
         break;
     }
 
+#if 0
     lv_canvas_draw_text(canvas, 0, 0, CANVAS_SIZE, &label_dsc, output_text);
+#else
+    lv_draw_label(&layer, &label_dsc, &(lv_area_t){0, 0, CANVAS_SIZE - 1, 16 - 1}, output_text, NULL);
+#endif
 
     // Draw WPM
 #if 0
@@ -104,7 +108,11 @@ static void draw_top(lv_obj_t *widget, lv_color_t cbuf[], const struct status_st
 
     char wpm_text[6] = {};
     snprintf(wpm_text, sizeof(wpm_text), "%d", state->wpm[9]);
+#if 0
     lv_canvas_draw_text(canvas, 42, 52, 24, &label_dsc_wpm, wpm_text);
+#else
+    lv_draw_label(&layer, &label_dsc_wpm, &(lv_area_t){42, 52, 42 + 24 - 1, 52 + 8 - 1}, wpm_text, NULL);
+#endif
 
     int max = 0;
     int min = 256;
@@ -128,7 +136,20 @@ static void draw_top(lv_obj_t *widget, lv_color_t cbuf[], const struct status_st
         points[i].x = 2 + i * 7;
         points[i].y = 60 - (state->wpm[i] - min) * 36 / range;
     }
+
+#if 0
     lv_canvas_draw_line(canvas, points, 10, &line_dsc);
+#else
+    for (int i = 0; i < 9; i++) {
+        // You must update p1 and p2 in the descriptor for every segment
+        line_dsc.p1 = points[i];
+        line_dsc.p2 = points[i + 1];
+
+        lv_draw_line(&layer, &line_dsc);
+    }
+#endif
+
+    lv_canvas_finish_layer(&layer);
 
     // Rotate canvas
     rotate_canvas(canvas, cbuf);
@@ -169,19 +190,56 @@ static void draw_middle(lv_obj_t *widget, lv_color_t cbuf[], const struct status
     for (int i = 0; i < 5; i++) {
         bool selected = i == state->active_profile_index;
 
+#if 0
         lv_canvas_draw_arc(canvas, circle_offsets[i][0], circle_offsets[i][1], 13, 0, 360,
                            &arc_dsc);
+#else
+        lv_draw_arc_dsc_t arc_dsc_new = arc_dsc;
+        arc_dsc_new.center.x    = circle_offsets[i][0];
+        arc_dsc_new.center.y    = circle_offsets[i][1];
+        arc_dsc_new.radius      = 13;
+        arc_dsc_new.start_angle = 0;
+        arc_dsc_new.end_angle   = 360;
+
+        lv_draw_arc(&layer, &arc_dsc_new);
+#endif
 
         if (selected) {
+#if 0
             lv_canvas_draw_arc(canvas, circle_offsets[i][0], circle_offsets[i][1], 9, 0, 359,
                                &arc_dsc_filled);
+#else
+            lv_draw_arc_dsc_t arc_dsc_new2 = arc_dsc_filled;
+            arc_dsc_new2.center.x    = circle_offsets[i][0];
+            arc_dsc_new2.center.y    = circle_offsets[i][1];
+            arc_dsc_new2.radius      = 9;
+            arc_dsc_new2.start_angle = 0;
+            arc_dsc_new2.end_angle   = 359;
+
+            lv_draw_arc(&layer, &arc_dsc_new2);
+#endif
         }
 
         char label[2];
         snprintf(label, sizeof(label), "%d", i + 1);
+#if 0
         lv_canvas_draw_text(canvas, circle_offsets[i][0] - 8, circle_offsets[i][1] - 10, 16,
                             (selected ? &label_dsc_black : &label_dsc), label);
+#else
+        lv_draw_label(&layer,
+                     (selected ? &label_dsc_black : &label_dsc),
+                     &(lv_area_t){
+                        circle_offsets[i][0] - 8,
+                        circle_offsets[i][1] - 10,
+                        circle_offsets[i][0] - 8 + 16,
+                        circle_offsets[i][1] - 10 + CANVAS_SIZE - 1
+                     },
+                     label,
+                     NULL);
+#endif
     }
+
+    lv_canvas_finish_layer(&layer);
 
     // Rotate canvas
     rotate_canvas(canvas, cbuf);
@@ -211,10 +269,20 @@ static void draw_bottom(lv_obj_t *widget, lv_color_t cbuf[], const struct status
 
         sprintf(text, "LAYER %i", state->layer_index);
 
+#if 0
         lv_canvas_draw_text(canvas, 0, 5, 68, &label_dsc, text);
+#else
+        lv_draw_label(&layer, &label_dsc, &(lv_area_t){0, 5, 68 - 1, 5 + 14 - 1}, text, NULL);
+#endif
     } else {
+#if 0
         lv_canvas_draw_text(canvas, 0, 5, 68, &label_dsc, state->layer_label);
+#else
+        lv_draw_label(&layer, &label_dsc, &(lv_area_t){0, 5, 68 - 1, 5 + 14 - 1}, state->layer_label, NULL);
+#endif
     }
+
+    lv_canvas_finish_layer(&layer);
 
     // Rotate canvas
     rotate_canvas(canvas, cbuf);
